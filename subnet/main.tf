@@ -17,3 +17,9 @@ for_each = var.subnets
   }
 }
 
+resource "aws_route_table_association" "main" {
+  for_each = var.subnets
+  subnet_id      = lookup(lookup(aws_subnet.main, each.key, null),"id",null)
+  route_table_id = lookup(lookup(aws_route_table.main,each.key, null), "id", null)
+}
+
