@@ -2,7 +2,7 @@ resource "aws_vpc" "main" {
   cidr_block = var.cidr
 }
 
-module "subnet" {
+module "subnets" {
   source   = "./subnet"
   for_each = var.subnets
   subnets   = each.value
