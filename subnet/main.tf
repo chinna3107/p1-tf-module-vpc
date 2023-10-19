@@ -7,6 +7,5 @@ resource "aws_subnet" "main" {
     Name = each.key
   }
 }
-
 variable "subnets" {}
 variable "vpc_id" {}
