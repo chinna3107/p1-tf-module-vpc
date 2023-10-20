@@ -26,6 +26,30 @@ resource "aws_route" "igw" {
   gateway_id             = aws_internet_gateway.igw.id
 }
 
+resource "aws_eip" "ngw" {
+for_each = lookup(lookup(module.subnets, "public", null), "subnet_ids", null)
+  domain = "vpc"
+}
+
+resource "aws_nat_gateway" "ngw" {
+  for_each = lookup(lookup(module.subnets, "public", null), "subnet_ids", null)
+  allocation_id = lookup(lookup(aws_eip.ngw, each.key, null), "id", null)
+  subnet_id = each.value["id"]
+}
+
+resource "aws_route" "igw" {
+ # for_each               = lookup(lookup(module.subnets, "public", null), "route_table_ids", null)
+ # route_table_id         = each.value["id"]
+ # destination_cidr_block = "0.0.0.0/0"
+ # gateway_id             = aws_internet_gateway.igw.id
+
+  Count                  =  local.private_route_table_ids
+  route_table_id         =  element(local.private_route_table_ids, count.index )
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = element(aws_nat_gateway.ngw.*.id, count.index)
+}
+
+
 output "subnet" {
   value = module.subnets
 }
