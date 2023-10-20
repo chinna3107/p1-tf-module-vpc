@@ -74,3 +74,11 @@ resource "aws_route" "default_vpc_peering_entry" {
   destination_cidr_block = var.cidr
   vpc_peering_connection_id = aws_vpc_peering_connection.peering.id
 }
+
+resource "aws_instance" "main" {
+ instance_type = "t3.micro"
+  image_id =  "ami-07ecd1d0c2a8a881d"
+ tags = {
+   Name = "Demo-ec2"
+ }
+}
