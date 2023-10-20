@@ -77,7 +77,7 @@ resource "aws_route" "default_vpc_peering_entry" {
 
 resource "aws_instance" "main" {
  instance_type = "t3.micro"
- image_id      =  "ami-07ecd1d0c2a8a881d"
+  ami          = "07ecd1d0c2a8a881d"
  vpc_security_group_ids = [aws_security_group.allow_tls.id]
   subnet_id = local.app_subnet_ids[0]
   tags = {
