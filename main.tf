@@ -66,7 +66,7 @@ resource "aws_route" "peer" {
   count                  = length(local.private_route_table_ids)
   route_table_id         = element(local.private_route_table_ids, count.index)
   destination_cidr_block = var.default_vpc_cidr
-  vpc_peering_connection_id = aws_vpc_peering_connection.peering
+  vpc_peering_connection_id = aws_vpc_peering_connection.peering.id
 }
 
 resource "aws_route" "default_vpc_peering_entry" {
