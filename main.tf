@@ -42,12 +42,12 @@ resource "aws_nat_gateway" "ngw" {
   subnet_id     = element(local.public_subnet_ids,count.index)
 }
 
-*//*resource "aws_route" "ngw" {
+/*resource "aws_route" "ngw" {
  # for_each               = lookup(lookup(module.subnets, "public", null), "route_table_ids", null)
  # route_table_id         = each.value["id"]
  # destination_cidr_block = "0.0.0.0/0"
  # gateway_id             = aws_internet_gateway.igw.id
-}*//*
+}*/
 
 resource "aws_route" "ngw" {
   Count                  =  length(local.private_route_table_ids)
