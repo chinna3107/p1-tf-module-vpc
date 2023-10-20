@@ -42,7 +42,7 @@ resource "aws_nat_gateway" "ngw" {
   subnet_id     = element(local.public_subnet_ids,count.index)
 }
 
-resource "aws_route" "ngw" {
+/*resource "aws_route" "ngw" {
  # for_each               = lookup(lookup(module.subnets, "public", null), "route_table_ids", null)
  # route_table_id         = each.value["id"]
  # destination_cidr_block = "0.0.0.0/0"
@@ -52,8 +52,16 @@ resource "aws_route" "ngw" {
   route_table_id         =  element(local.private_route_table_ids,count.index)
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id         = element(aws_nat_gateway.ngw.*.id,count.index)
+}*/
 
+resource "aws_route" "ngw" {
+  Count                  =  length(local.private_route_table_ids)
+  route_table_id         =  element(local.private_route_table_ids,count.index)
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = element(aws_nat_gateway.ngw.*.id,count.index)
 }
+
+
 
 
 output "subnet" {
