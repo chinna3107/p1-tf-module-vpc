@@ -32,7 +32,7 @@ resource "aws_eip" "ngw" {
   domain  = "vpc"
 }
 
-/*resource "aws_nat_gateway" "ngw" {
+resource "aws_nat_gateway" "ngw" {
   # for_each = lookup(lookup(module.subnets, "public", null), "subnet_ids", null)
   # allocation_id = lookup(lookup(aws_eip.ngw, each.key, null), "id", null)
   #subnet_id = each.value["id"]
@@ -54,11 +54,11 @@ resource "aws_route" "ngw" {
   route_table_id         =  element(local.private_route_table_ids,count.index)
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id         = element(aws_nat_gateway.ngw.*.id,count.index)
-}*/
-
-output "subnet" {
-  value = module.subnets
 }
+
+/*output "subnet" {
+  value = module.subnets
+}*/
 
 output "public_subnet_ids" {
   value = local.public_subnet_ids
