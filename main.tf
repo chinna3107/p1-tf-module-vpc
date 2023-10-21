@@ -80,9 +80,7 @@ resource "aws_instance" "main" {
   ami          = "ami-07ecd1d0c2a8a881d"
  vpc_security_group_ids = [aws_security_group.allow_tls.id]
   subnet_id = local.app_subnet_ids[0]
-  tags = {
-   Name = "Demo-ec2"
- }
+  tags = merge(local.tags, { Name = "${var.env}-ec2"})
 }
 
 resource "aws_security_group" "allow_tls" {
