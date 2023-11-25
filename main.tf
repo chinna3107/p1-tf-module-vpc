@@ -74,6 +74,7 @@ resource "aws_route" "default_vpc_peering_entry" {
   destination_cidr_block = var.cidr
   vpc_peering_connection_id = aws_vpc_peering_connection.peering.id
 }
+/*
 
 resource "aws_instance" "main" {
  instance_type = "t3.micro"
@@ -82,6 +83,7 @@ resource "aws_instance" "main" {
   subnet_id = local.app_subnet_ids[0]
   tags = merge(local.tags, { Name = "${var.env}-ec2"})
 }
+*/
 
 resource "aws_security_group" "allow_tls" {
   name        = "allow_tls"
